@@ -6,6 +6,7 @@ import moment from 'moment';
 
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import Paper from '@mui/material/Paper';
+import { Typography } from '@mui/material';
 
 const localeText = {
     // Root
@@ -189,6 +190,7 @@ const localeText = {
 }
 
 function msFormatter(ms) {
+    if (!ms) return '0 h';
     let hours = String(Math.ceil((ms / (1000 * 60 * 60)) * 4) / 4).replace('0', '').replace('.25', '¼').replace('.5', '½').replace('.75', '¾');
     return hours + " h";
 }
@@ -206,9 +208,11 @@ function capitalizeFirstLetter(string) {
 }
 
 export default function Projekti({ asiakas, menneet_keikat, tulevat_keikat, id }) {
+    const [valitutTulevatKeikat, setValitutTulevatKeikat] = React.useState([]);
+    const [valitutMenneetKeikat, setValitutMenneetKeikat] = React.useState([]);
 
     const tulevatSarakkeet = [
-        { field: 'name', headerName: 'Nimi', minWidth: 200 },
+        { field: 'name', headerName: 'Nimi', minWidth: 300 },
         {
             field: 'ajankohta',
             headerName: 'Ajankohta',
@@ -217,12 +221,12 @@ export default function Projekti({ asiakas, menneet_keikat, tulevat_keikat, id }
             valueGetter: (value, task) => formatAjankohta(task.start_date, task.due_date),
         },
         {
-            field: 'status', headerName: 'Status', minWidth: 150,
-            valueGetter: (value, task) => capitalizeFirstLetter(task.status.status.replace(/^[0-9]/, "").replace(" - ", "")),
-        },
-        {
             field: 'venue', headerName: 'Venue', minWidth: 200,
             valueGetter: (value, task) => task.custom_fields[task.custom_fields.findIndex((field) => field.name === 'Venue')].type_config.options[task.custom_fields[task.custom_fields.findIndex((field) => field.name === 'Venue')].value].name,
+        },
+        {
+            field: 'status', headerName: 'Status', minWidth: 150,
+            valueGetter: (value, task) => capitalizeFirstLetter(task.status.status.replace(/^[0-9]/, "").replace(" - ", "")),
         },
         {
             field: 'time_estimate', headerName: 'Työaika-arvio', minWidth: 120,
@@ -235,17 +239,17 @@ export default function Projekti({ asiakas, menneet_keikat, tulevat_keikat, id }
         {
             field: 'ajankohta',
             headerName: 'Ajankohta',
-            minWidth: 150,
+            minWidth: 130,
             sortable: false,
             valueGetter: (value, task) => formatAjankohta(task.start_date, task.due_date),
         },
         {
-            field: 'status', headerName: 'Status', minWidth: 150,
-            valueGetter: (value, task) => capitalizeFirstLetter(task.status.status.replace(/^[0-9]/, "").replace(" - ", "")),
-        },
-        {
             field: 'venue', headerName: 'Venue', minWidth: 200,
             valueGetter: (value, task) => task.custom_fields[task.custom_fields.findIndex((field) => field.name === 'Venue')].type_config.options[task.custom_fields[task.custom_fields.findIndex((field) => field.name === 'Venue')].value].name,
+        },
+        {
+            field: 'status', headerName: 'Status', minWidth: 150,
+            valueGetter: (value, task) => capitalizeFirstLetter(task.status.status.replace(/^[0-9]/, "").replace(" - ", "")),
         },
         {
             field: 'time_spent', headerName: 'Toteutunut työaika', minWidth: 150,
@@ -274,7 +278,6 @@ export default function Projekti({ asiakas, menneet_keikat, tulevat_keikat, id }
                     columns={tulevatSarakkeet}
                     initialState={{ pagination: { paginationModel } }}
                     checkboxSelection
-                    //density='compact'
                     sx={{ border: 0 }}
                     autosizeOptions={{
                         columns: ['name', 'status', 'venue'],
@@ -284,7 +287,20 @@ export default function Projekti({ asiakas, menneet_keikat, tulevat_keikat, id }
                     autosizeOnMount={true}
                     slots={{ toolbar: GridToolbar }}
                     localeText={localeText}
+                    onRowSelectionModelChange={(ids) => {
+                        const selectedIDs = new Set(ids);
+                        const selectedRows = tulevat_keikat.filter((row) =>
+                          selectedIDs.has(row.id)
+                        );
+                        setValitutTulevatKeikat(selectedRows);
+                    }}
                 />
+                {(valitutTulevatKeikat.length > 0) &&
+                    <Typography sx={{ mt: 2 }}>
+                        <b>Valitut tulevat keikat:</b> työaika-arvio {' '}
+                        {msFormatter(valitutTulevatKeikat.map(keikka => keikka.time_estimate).reduce((acc, amount) => acc + amount))}
+                    </Typography>
+                }
             </Paper>
 
             <Paper sx={{
@@ -296,7 +312,6 @@ export default function Projekti({ asiakas, menneet_keikat, tulevat_keikat, id }
                     columns={menneetSarakkeet}
                     initialState={{ pagination: { paginationModel } }}
                     checkboxSelection
-                    //density='compact'
                     sx={{ border: 0 }}
                     autosizeOptions={{
                         columns: ['name', 'status', 'venue'],
@@ -306,7 +321,21 @@ export default function Projekti({ asiakas, menneet_keikat, tulevat_keikat, id }
                     autosizeOnMount={true}
                     slots={{ toolbar: GridToolbar }}
                     localeText={localeText}
+                    onRowSelectionModelChange={(ids) => {
+                        const selectedIDs = new Set(ids);
+                        const selectedRows = menneet_keikat.filter((row) =>
+                          selectedIDs.has(row.id)
+                        );
+                        setValitutMenneetKeikat(selectedRows);
+                    }}
                 />
+                {(valitutMenneetKeikat.length > 0) &&
+                    <Typography sx={{ mt: 2 }}>
+                        <b>Valitut menneet keikat:</b> {' '}
+                        {msFormatter(valitutMenneetKeikat.map(keikka => keikka.time_spent).reduce((acc, amount) => acc + amount)) + ' — '}
+                        {valitutMenneetKeikat.map( keikka => Number(keikka.custom_fields[keikka.custom_fields.findIndex((field) => field.name === 'Hinta')].value) ).reduce( (acc, amount) => acc + amount ) + ' € + ALV'}
+                    </Typography>
+                }
             </Paper>
         </Layout>
     )
