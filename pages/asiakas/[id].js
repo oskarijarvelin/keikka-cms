@@ -261,7 +261,7 @@ export default function Projekti({ asiakas, menneet_keikat, tulevat_keikat, id }
         },
         {
             field: 'laskutettu', headerName: 'Laskutettu', minWidth: 140, sortable: false,
-            valueGetter: (value, task) => (task.custom_fields[task.custom_fields.findIndex((field) => field.name === 'Laskutus PVM')].value) ? (moment(task.custom_fields[task.custom_fields.findIndex((field) => field.name === 'Laskutus PVM')].value, "x").format('D.M.YYYY')) : '',
+            valueGetter: (value, task) => (task.custom_fields[task.custom_fields.findIndex((field) => field.name === 'Laskutus PVM')].value) ? (moment(task.custom_fields[task.custom_fields.findIndex((field) => field.name === 'Laskutus PVM')].value, "x").format('D.M.YYYY')) : 'Ei vielä',
         },
     ];
 
