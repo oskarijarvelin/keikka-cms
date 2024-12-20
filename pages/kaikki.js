@@ -40,7 +40,7 @@ export default function Keikat({ menneet_keikat, tulevat_keikat }) {
                     onRowSelectionModelChange={(ids) => {
                         const selectedIDs = new Set(ids);
                         const selectedRows = tulevat_keikat.filter((row) =>
-                          selectedIDs.has(row.id)
+                            selectedIDs.has(row.id)
                         );
                         setValitutTulevatKeikat(selectedRows);
                     }}
@@ -75,7 +75,7 @@ export default function Keikat({ menneet_keikat, tulevat_keikat }) {
                     onRowSelectionModelChange={(ids) => {
                         const selectedIDs = new Set(ids);
                         const selectedRows = menneet_keikat.filter((row) =>
-                          selectedIDs.has(row.id)
+                            selectedIDs.has(row.id)
                         );
                         setValitutMenneetKeikat(selectedRows);
                     }}
@@ -84,7 +84,7 @@ export default function Keikat({ menneet_keikat, tulevat_keikat }) {
                     <Typography sx={{ mt: 2 }}>
                         <b>Valitut menneet keikat:</b> {' '}
                         {msFormatter(valitutMenneetKeikat.map(keikka => keikka.time_spent).reduce((acc, amount) => acc + amount)) + ' — '}
-                        {valitutMenneetKeikat.map( keikka => Number(keikka.custom_fields[keikka.custom_fields.findIndex((field) => field.name === 'Hinta')].value) ).reduce( (acc, amount) => acc + amount ) + ' € + ALV'}
+                        {valitutMenneetKeikat.map(keikka => Number(keikka.custom_fields[keikka.custom_fields.findIndex((field) => field.name === 'Hinta')].value)).reduce((acc, amount) => acc + amount) + ' € + ALV'}
                     </Typography>
                 }
             </Paper>
@@ -111,11 +111,11 @@ export async function getServerSideProps(ctx) {
 
         let tasks = await tasks_raw.json();
 
-        if ( tasks.hasOwnProperty("tasks") && tasks.tasks.length > 0 ) {
+        if (tasks.hasOwnProperty("tasks") && tasks.tasks.length > 0) {
             tulevat_keikat.push(...tasks.tasks);
         }
 
-        if ( tasks.hasOwnProperty("last_page") && tasks.last_page == true ) {
+        if (tasks.hasOwnProperty("last_page") && tasks.last_page == true) {
             break;
         }
     }
@@ -135,11 +135,11 @@ export async function getServerSideProps(ctx) {
 
         let tasks = await tasks_raw.json();
 
-        if ( tasks.hasOwnProperty("tasks") && tasks.tasks.length > 0 ) {
+        if (tasks.hasOwnProperty("tasks") && tasks.tasks.length > 0) {
             menneet_keikat.push(...tasks.tasks);
         }
 
-        if ( tasks.hasOwnProperty("last_page") && tasks.last_page == true ) {
+        if (tasks.hasOwnProperty("last_page") && tasks.last_page == true) {
             break;
         }
     }
