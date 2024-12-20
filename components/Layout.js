@@ -137,25 +137,23 @@ export default function Layout({ title, description, asiakas, children }) {
                 {title}
               </Typography>
             </Box>
-            {asiakas && (
-              <Tooltip title="Päivitä tehtävät">
-                <IconButton onClick={() => handleReload()} color="white">
-                  <AutorenewIcon
-                    sx={{
-                      animation: reloading ? "spin 2s linear infinite" : "none",
-                      "@keyframes spin": {
-                        "0%": {
-                          transform: "rotate(0deg)",
-                        },
-                        "100%": {
-                          transform: "rotate(360deg)",
-                        },
+            <Tooltip title="Päivitä tehtävät">
+              <IconButton onClick={() => handleReload()} color="white">
+                <AutorenewIcon
+                  sx={{
+                    animation: reloading ? "spin 2s linear infinite" : "none",
+                    "@keyframes spin": {
+                      "0%": {
+                        transform: "rotate(0deg)",
                       },
-                    }}
-                  />
-                </IconButton>
-              </Tooltip>
-            )}
+                      "100%": {
+                        transform: "rotate(360deg)",
+                      },
+                    },
+                  }}
+                />
+              </IconButton>
+            </Tooltip>
           </Toolbar>
         </AppBar>
       </Box>
