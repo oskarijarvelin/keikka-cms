@@ -24,7 +24,7 @@ export const tulevatSarakkeetKaikki = [
     },
     {
         field: 'time_estimate', headerName: 'Työaika-arvio', minWidth: 120,
-        valueGetter: (value, task) => (task.time_estimate > 0) ? msFormatter(task.time_estimate) : '',
+        valueGetter: (value, task) => (task.time_estimate > 0) ? msFormatter(task.time_estimate) + ' h' : '',
     },
 ];
 
@@ -51,7 +51,7 @@ export const menneetSarakkeetKaikki = [
     },
     {
         field: 'time_spent', headerName: 'Työtunnit', minWidth: 50,
-        valueGetter: (value, task) => (task.time_spent > 0) ? msFormatter(task.time_spent) : '',
+        valueGetter: (value, task) => (task.time_spent > 0) ? msFormatter(task.time_spent) + ' h' : '',
     },
     {
         field: 'value', headerName: 'Laskutusarvo', minWidth: 140,
@@ -82,7 +82,7 @@ export const tulevatSarakkeet = [
     },
     {
         field: 'time_estimate', headerName: 'Työaika-arvio', minWidth: 120,
-        valueGetter: (value, task) => (task.time_estimate > 0) ? msFormatter(task.time_estimate) : '',
+        valueGetter: (value, task) => (task.time_estimate > 0) ? msFormatter(task.time_estimate) + ' h' : '',
     },
 ];
 
@@ -105,7 +105,7 @@ export const menneetSarakkeet = [
     },
     {
         field: 'time_spent', headerName: 'Toteutunut työaika', minWidth: 150,
-        valueGetter: (value, task) => (task.time_spent > 0) ? msFormatter(task.time_spent) : '',
+        valueGetter: (value, task) => (task.time_spent > 0) ? msFormatter(task.time_spent) + ' h' : '',
     },
     {
         field: 'value', headerName: 'Laskutusarvo', minWidth: 140,

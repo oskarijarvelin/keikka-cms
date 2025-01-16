@@ -46,7 +46,7 @@ export default function Projekti({ asiakas, menneet_keikat, tulevat_keikat, id }
                 {(valitutTulevatKeikat.length > 0) &&
                     <Typography sx={{ mt: 2 }}>
                         <b>Valitut tulevat keikat:</b> työaika-arvio {' '}
-                        {msFormatter(valitutTulevatKeikat.map(keikka => keikka.time_estimate).reduce((acc, amount) => acc + amount))}
+                        {msFormatter(valitutTulevatKeikat.map(keikka => keikka.time_estimate).reduce((acc, amount) => acc + amount)) + ' h'}
                     </Typography>
                 }
             </Paper>
@@ -80,7 +80,7 @@ export default function Projekti({ asiakas, menneet_keikat, tulevat_keikat, id }
                 {(valitutMenneetKeikat.length > 0) &&
                     <Typography sx={{ mt: 2 }}>
                         <b>Valitut menneet keikat:</b> {' '}
-                        {msFormatter(valitutMenneetKeikat.map(keikka => keikka.time_spent).reduce((acc, amount) => acc + amount)) + ' — '}
+                        {msFormatter(valitutMenneetKeikat.map(keikka => keikka.time_spent).reduce((acc, amount) => acc + amount)) + ' h — '}
                         {valitutMenneetKeikat.map( keikka => Number(keikka.custom_fields[keikka.custom_fields.findIndex((field) => field.name === 'Hinta')].value) ).reduce( (acc, amount) => acc + amount ) + ' € + ALV'}
                     </Typography>
                 }

@@ -1,9 +1,8 @@
 import moment from 'moment';
 
 export function msFormatter(ms) {
-    if (!ms) return '0 h';
-    let hours = String( Math.floor( ( ms / (1000 * 60 * 60) ) % 24 ) );
-    return hours + " h";
+    if (!ms) return 0;
+    return String( Math.floor( ms / (1000 * 60 * 60) ) );
 }
 
 export function formatAjankohta(start_date, due_date) {

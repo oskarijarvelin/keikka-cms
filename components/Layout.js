@@ -162,7 +162,7 @@ export default function Layout({ title, description, asiakas, children }) {
         sx={{ pt: "64px", minHeight: "calc(100vh - 85px)" }}
       >
         {children}
-        {asiakas && (
+        {(asiakas == 1) && (
           <Tooltip title="Lähetä uusi tehtävä">
             <Fab
               color="primary"
