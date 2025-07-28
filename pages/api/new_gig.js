@@ -2,7 +2,7 @@
 export default function handler(req, res) {
     const body = req.body;
 
-    if (!body.pid) {
+    if (!body.asiakasnumero) {
         return res.status(400).json({ data: "Missing Client ID" });
     }
 

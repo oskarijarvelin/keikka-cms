@@ -81,7 +81,7 @@ export default function Layout({ title, description, asiakas, children }) {
     router.reload(window.location.pathname);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const lomake = {
@@ -100,7 +100,7 @@ export default function Layout({ title, description, asiakas, children }) {
       api_url = `https://keikat.oskarijarvelin.fi/api/new_gig`;
     }
 
-    const response = fetch(`${api_url}`, {
+    const response = await fetch(`${api_url}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
