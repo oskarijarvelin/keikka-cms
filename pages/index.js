@@ -42,7 +42,7 @@ export default function Index() {
     <Layout
       title="Vittu oon keikkaa tehnyt - Oskari Järvelin"
       description="Kuvaus"
-      projekti={false}
+      asiakas={false}
     >
       <Box sx={{ ...style }}>
         <Typography
